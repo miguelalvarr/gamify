@@ -18,6 +18,17 @@
   // Detectar si estamos ya en modo de recuperación (para evitar bucles)
   const isRecoveryMode = window.location.href.includes('recovery=true');
 
+  // Verificar si estamos en una página de registro/signup
+  const isSignupPage = window.location.hash.includes('/signup') || 
+                        window.location.hash.includes('/register') ||
+                        window.location.hash.includes('/crear-cuenta');
+  
+  // No ejecutar la recuperación en páginas de registro
+  if (isSignupPage) {
+    console.log('[AUTH RECOVERY]: Página de registro detectada, desactivando recuperación automática');
+    return; // Salir temprano sin configurar el temporizador
+  }
+
   // Establecer un temporizador para detectar la carga de la aplicación
   const recoveryTimeout = setTimeout(function() {
     // Si después de 5 segundos no hay contenido visible,
@@ -30,7 +41,13 @@
       appRoot.textContent.trim().length > 0
     );
     
-    if (!hasContent && !isRecoveryMode) {
+    // Verificar nuevamente que no estamos en una página de signup
+    // (por si la URL cambió después de cargar el script)
+    const currentIsSignupPage = window.location.hash.includes('/signup') || 
+                                window.location.hash.includes('/register') ||
+                                window.location.hash.includes('/crear-cuenta');
+    
+    if (!hasContent && !isRecoveryMode && !currentIsSignupPage) {
       console.log('[AUTH RECOVERY]: Detectada posible pantalla blanca.');
       
       // Intentar limpiar datos de autenticación que podrían estar causando problemas
