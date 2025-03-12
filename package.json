@@ -4,9 +4,12 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview --host",
+    "dev": "vite --host",
+    "build": "node build.mjs",
+    "build:prod": "node build.mjs --mode production",
+    "deploy": "npm run build:prod && echo 'Aplicación lista para desplegar en Render'",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview --host",
   "start": "node server.js"
   },
   "dependencies": {
