@@ -9,7 +9,8 @@
     "build:prod": "node build.mjs --mode production",
     "deploy": "npm run build:prod && echo 'Aplicación lista para desplegar en Render'",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "node preview-spa.mjs"
+    "preview": "node preview-spa.mjs",
+    "start": "node server.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
