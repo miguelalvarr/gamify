@@ -11,7 +11,7 @@ export default defineConfig({
       'localhost',
       '127.0.0.1',
       'gamify-npnc.onrender.com',
-      '.onrender.com' // Permite todos los subdominios de onrender.com
+      '.onrender.com'
     ]
   },
   preview: {
@@ -21,7 +21,7 @@ export default defineConfig({
       'localhost',
       '127.0.0.1',
       'gamify-npnc.onrender.com',
-      '.onrender.com' // Permite todos los subdominios de onrender.com
+      '.onrender.com'
     ]
   },
   build: {
