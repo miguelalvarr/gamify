@@ -1,0 +1,22 @@
+// Comandos para añadir a tu package.json en la sección "scripts"
+
+"scripts": {
+  "dev": "vite --host",
+  "build": "node build.mjs",
+  "build:prod": "node build.mjs --mode production",
+  "deploy": "npm run build:prod && echo 'Aplicación lista para desplegar en Render'",
+  "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+  "preview": "vite preview"
+}
+
+// Para despliegue en Render, también puedes crear un archivo render.yaml con la siguiente configuración:
+
+services:
+  - type: web
+    name: gamify
+    env: node
+    buildCommand: npm install && npm run build:prod
+    startCommand: npm run preview -- --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: NODE_VERSION
+        value: 18.x

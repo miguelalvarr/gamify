@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: gamify
+    env: node
+    buildCommand: npm install && npm run build:prod
+    startCommand: npm run preview -- --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: NODE_VERSION
+        value: 18.x
