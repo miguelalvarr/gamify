@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, TextField, Button, Paper, Grid, Alert, Link } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Login() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Detectar si estamos en la ruta de registro
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -10,6 +15,13 @@ function Login() {
   const [username, setUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  
+  // Detectar ruta y cambiar modo automáticamente
+  useEffect(() => {
+    const path = location.pathname;
+    const isRegisterPath = path === '/register' || path === '/signup';
+    setIsLogin(!isRegisterPath);
+  }, [location]);
   
   const { signIn, signUp, resetPassword } = useAuth();
   

@@ -196,57 +196,8 @@ function App() {
   const [isInitialAuthCheck, setIsInitialAuthCheck] = useState(true);
   const [authError, setAuthError] = useState(false);
   
-  // Detector de pantalla blanca inteligente
-  useEffect(() => {
-    // No ejecutar en rutas de registro/signup
-    const isSignupPage = location.pathname.includes('/signup') || 
-                        location.pathname.includes('/register') || 
-                        location.hash.includes('/signup') || 
-                        location.hash.includes('/register');
-    
-    if (isSignupPage) {
-      console.log("En página de registro, no se realizará detección de pantalla blanca");
-      return;
-    }
-    
-    // Este código solo se ejecuta después de cargar la aplicación
-    // y solo si NO estamos en una página de registro
-    let blankScreenTimer = null;
-    
-    const checkForBlankScreen = () => {
-      const appContent = document.getElementById('root');
-      // Si después de 5 segundos sigue sin renderizarse contenido
-      // y no estamos en la página de registro/signup
-      if (appContent && appContent.children.length === 0 && !isSignupPage) {
-        console.log("Detectada pantalla blanca - intentando recuperación");
-        // Limpiar tokens potencialmente corruptos
-        try {
-          Object.keys(localStorage).forEach(key => {
-            if (key.includes('supabase') || key.includes('sb-')) {
-              localStorage.removeItem(key);
-            }
-          });
-          // Redirigir al login
-          window.location.href = '/#/login';
-        } catch (error) {
-          console.error("Error durante la recuperación:", error);
-        }
-      }
-    };
-    
-    // Ejecutar detección solo cuando la página haya cargado completamente
-    if (document.readyState === 'complete') {
-      blankScreenTimer = setTimeout(checkForBlankScreen, 5000);
-    } else {
-      window.addEventListener('load', () => {
-        blankScreenTimer = setTimeout(checkForBlankScreen, 5000);
-      });
-    }
-    
-    return () => {
-      if (blankScreenTimer) clearTimeout(blankScreenTimer);
-    };
-  }, [location]); // Depende de location para detectar cambios de ruta
+  // Rutas públicas que siempre son accesibles, incluso con usuario
+  const publicRoutes = ["/login", "/register", "/signup"];
   
   // Sistema de protección contra carga infinita
   useEffect(() => {
@@ -385,9 +336,11 @@ function App() {
             </Box>
           )}
           
-          {!user && (
+          {(!user || publicRoutes.some(route => location.pathname === route)) && (
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Login />} />
+              <Route path="/signup" element={<Login />} />
               <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
           )}

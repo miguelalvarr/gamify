@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperación de Gamify</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 500px;
+      padding: 30px;
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    h1 {
+      color: #1ed760;
+      margin-bottom: 20px;
+    }
+    
+    button {
+      background-color: #1ed760;
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.2s;
+    }
+    
+    button:hover {
+      transform: scale(1.05);
+    }
+    
+    .info {
+      margin-top: 20px;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Recuperación de Gamify</h1>
+    <p>Esta página te ayudará a solucionar problemas de pantalla blanca en la aplicación.</p>
+    
+    <div>
+      <button onclick="resetAuth()">Reiniciar Autenticación</button>
+      <button onclick="goToLogin()">Ir al Login</button>
+    </div>
+    
+    <p class="info">Usa el botón "Reiniciar Autenticación" si tu aplicación se queda con pantalla blanca después de iniciar sesión.</p>
+    
+    <script>
+      function resetAuth() {
+        // Limpiar tokens de Supabase
+        Object.keys(localStorage).forEach(key => {
+          if (key.includes('supabase') || key.includes('sb-')) {
+            localStorage.removeItem(key);
+            console.log('Eliminado:', key);
+          }
+        });
+        
+        alert('¡Datos de autenticación eliminados! Serás redirigido al login.');
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1000);
+      }
+      
+      function goToLogin() {
+        window.location.href = '/#/login';
+      }
+    </script>
+  </div>
+</body>
+</html>
