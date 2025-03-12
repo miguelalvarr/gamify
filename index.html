@@ -6,11 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gamify - Música de Videojuegos</title>
     <meta name="description" content="Plataforma de streaming de música de videojuegos" />
-    <!-- Script de recuperación para prevenir pantalla blanca -->
-    <script src="/auth-recovery.js"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Script minimalista para detectar pantallas blancas que NO interfiere con el registro -->
+    <script>
+      // Solo ejecutar después de que todo haya cargado
+      window.addEventListener('load', function() {
+        // Esperar a que React tenga tiempo de renderizar
+        setTimeout(function() {
+          // Verificar que NO estamos en las páginas de registro/signup
+          const isSignupPage = window.location.hash.includes('/signup') || 
+                              window.location.hash.includes('/register') || 
+                              window.location.hash.includes('/crear-cuenta');
+          
+          if (!isSignupPage) {
+            const root = document.getElementById('root');
+            if (root && root.children.length === 0) {
+              console.log('Pantalla en blanco detectada, limpiando datos de sesión...');
+              // Limpiar tokens de Supabase
+              Object.keys(localStorage).forEach(key => {
+                if (key.includes('supabase') || key.includes('sb-')) {
+                  localStorage.removeItem(key);
+                }
+              });
+              // Redirigir a login
+              window.location.href = '/#/login';
+            }
+          }
+        }, 3000); // 3 segundos es un buen compromiso
+      });
+    </script>
   </body>
 </html>
