@@ -4,12 +4,12 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-  "dev": "vite --host",
-  "build": "node build.mjs",
-  "build:prod": "node build.mjs --mode production",
-  "deploy": "npm run build:prod && echo 'Aplicación lista para desplegar en Render'",
-  "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-  "preview": "node preview.mjs"
+    "dev": "vite --host",
+    "build": "node build.mjs",
+    "build:prod": "node build.mjs --mode production",
+    "deploy": "npm run build:prod && echo 'Aplicación lista para desplegar en Render'",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "node preview-spa.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -17,6 +17,7 @@
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
     "@supabase/supabase-js": "^2.39.0",
+    "express": "^4.21.2",
     "firebase": "^11.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
