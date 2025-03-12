@@ -13,4 +13,20 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
+  <script>
+    // Detectar pantalla blanca y recuperarse automáticamente
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        if (document.getElementById('root').children.length === 0) {
+          // Pantalla en blanco detectada
+          Object.keys(localStorage).forEach(key => {
+            if (key.includes('supabase') || key.includes('sb-')) {
+              localStorage.removeItem(key);
+            }
+          });
+          window.location.href = '/#/login';
+        }
+      }, 3000);
+    });
+  </script>
 </html>
